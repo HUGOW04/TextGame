@@ -5,13 +5,15 @@ namespace TextGame
 {
     class Program
     {
-        static void Lore()
+
+        static void lore()
         {
             Console.WriteLine("You are inside a cave with 3 exits but one is the right one press 1 or 2 or 3");
             Console.Write("input your answer: ");
         }
         static string Play_again()
         {
+
             Console.Write("play again yes/no: ");
             string answer = Console.ReadLine();
             if (answer == "yes")
@@ -31,12 +33,14 @@ namespace TextGame
         static int pick()
         {
             string[] animal = { "Tiger", "Cobra", "Monke" };
+
             Random random = new Random();
             int num = random.Next(0, 10);
             if (num > 2)
             {
                 Console.WriteLine("You survived");
                 return num;
+
             }
             else
             {
@@ -46,10 +50,11 @@ namespace TextGame
         }
         static void Main(string[] args)
         {
+
             bool death = false;
             int rounds = 1;
             int endscore = 0;
-            string text;
+            string text = "";
             while (true)
             {
                 while (true)
@@ -58,7 +63,7 @@ namespace TextGame
                     try
                     {
                         Console.WriteLine("Rounds: " + rounds);
-                        Lore();
+                        lore();
                         int input = int.Parse(Console.ReadLine());
                         switch (input)
                         {
@@ -73,6 +78,7 @@ namespace TextGame
                                 {
                                     rounds = 1;
                                     death = true;
+
                                 }
                                 break;
                             case 2:
@@ -81,16 +87,17 @@ namespace TextGame
                                     rounds++;
                                     endscore++;
                                     text = endscore.ToString();
+
                                 }
                                 else
                                 {
                                     rounds = 1;
                                     death = true;
+
                                 }
                                 break;
                             case 3:
                                 if (pick() > 2)
-
                                 {
                                     rounds++;
                                     endscore++;
@@ -100,8 +107,9 @@ namespace TextGame
                                 {
                                     rounds = 1;
                                     death = true;
+
                                 }
-                                break;
+                                break;                   
                         }
                     }
                     catch
@@ -112,8 +120,12 @@ namespace TextGame
                     while (death == true && rounds == 1)
                     {
                         var path = "score.txt";
+                        if(!(File.Exists(path)))
+                        {
+                            File.Create(path).Close();
+                            File.WriteAllText(path, text);
+                        }
                         string textfil = File.ReadAllText(path);
-                        Console.WriteLine(textfil.Length);
                         try
                         {
                             int convertion = int.Parse(textfil);
@@ -123,6 +135,7 @@ namespace TextGame
                                 textfil = Convert.ToString(convertion);
                                 File.WriteAllText(path, textfil);
                             }
+
                         }
                         catch
                         {
@@ -131,10 +144,7 @@ namespace TextGame
                                 File.WriteAllText(path, "0");
                             }
                         }
-                        string readtextfile = File.ReadAllText(path);
-                        Console.Clear();
-                        Console.WriteLine("Your Score: " + endscore + " HighScore: " + readtextfile);
-                        Console.WriteLine("--------------");
+
                         Console.Write("Clear score yes/no: ");
                         string result = Console.ReadLine();
                         if (result == "yes")
@@ -145,8 +155,14 @@ namespace TextGame
                         {
                             Console.WriteLine("Ok!");
                         }
-                        Thread.Sleep(2000);
+
+                        string readtextfile = File.ReadAllText(path);
+
+
+
                         Console.Clear();
+                        Console.WriteLine("Your Score: " + endscore + " HighScore: " + readtextfile);
+                        Console.WriteLine("--------------");
                         if (Play_again() == "yes")
                         {
                             break;
@@ -157,7 +173,9 @@ namespace TextGame
                         }
                     }
                 }
+
             }
         }
+
     }
 }
