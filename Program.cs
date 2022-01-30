@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Threading;
+using System.Media;
 namespace TextGame
 {
     class Program
@@ -50,13 +51,15 @@ namespace TextGame
         }
         static void Main(string[] args)
         {
-
+            SoundPlayer Player = new SoundPlayer("Guy screaming meme.wav");
             bool death = false;
             int rounds = 1;
+            int round = 1;
             int endscore = 0;
             string text = "";
             while (true)
             {
+                Player.PlayLooping();
                 while (true)
                 {
                     Console.Clear();
@@ -72,6 +75,7 @@ namespace TextGame
                                 {
                                     rounds++;
                                     endscore++;
+                                    round++;
                                     text = endscore.ToString();
                                 }
                                 else
@@ -86,6 +90,7 @@ namespace TextGame
                                 {
                                     rounds++;
                                     endscore++;
+                                    round++;
                                     text = endscore.ToString();
 
                                 }
@@ -101,6 +106,7 @@ namespace TextGame
                                 {
                                     rounds++;
                                     endscore++;
+                                    round++;
                                     text = endscore.ToString();
                                 }
                                 else
@@ -119,6 +125,9 @@ namespace TextGame
                     Thread.Sleep(1000);
                     while (death == true && rounds == 1)
                     {
+                        Player.Stop();
+                        SoundPlayer Death = new SoundPlayer("lego-yoda-death-sound-effect.wav");
+                        Death.Play();
                         var path = "score.txt";
                         if(!(File.Exists(path)))
                         {
@@ -141,7 +150,14 @@ namespace TextGame
                         {
                             if (textfil.Length == 0)
                             {
-                                File.WriteAllText(path, "0");
+                                if(round == 1)
+                                {
+                                    File.WriteAllText(path, "0");
+                                }
+                                else
+                                {
+                                    File.WriteAllText(path, text);
+                                }
                             }
                         }
 
