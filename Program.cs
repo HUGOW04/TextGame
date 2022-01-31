@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Threading;
-using System.Media;
 namespace TextGame
 {
     class Program
@@ -51,7 +50,7 @@ namespace TextGame
         }
         static void Main(string[] args)
         {
-            SoundPlayer Player = new SoundPlayer("Guy screaming meme.wav");
+            
             bool death = false;
             int rounds = 1;
             int round = 1;
@@ -59,7 +58,7 @@ namespace TextGame
             string text = "";
             while (true)
             {
-                Player.PlayLooping();
+                
                 while (true)
                 {
                     Console.Clear();
@@ -125,9 +124,7 @@ namespace TextGame
                     Thread.Sleep(1000);
                     while (death == true && rounds == 1)
                     {
-                        Player.Stop();
-                        SoundPlayer Death = new SoundPlayer("lego-yoda-death-sound-effect.wav");
-                        Death.Play();
+                       
                         var path = "score.txt";
                         if(!(File.Exists(path)))
                         {
